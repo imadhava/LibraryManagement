@@ -1,19 +1,17 @@
-Library Management System API - Flask
-
-Welcome to the Library Management System API! This simple yet powerful system allows you to manage a collection of books, perform CRUD operations, and search for books by title, author, or both. Designed for simplicity and clarity, this API is perfect for small-scale library systems or personal projects.
+Library Management System API with Flask
+This document provides an overview of a simple yet powerful Library Management System API built using Flask.
 
 Features
-Add Books: Create new books with titles, authors, and content for multiple pages.
-Retrieve Books: Search for books by title, author, or both.
-Update Books: Update book information, including title, author, and page content.
-Delete Books: Remove books from the library by specifying title and author.
-API Endpoints
-1. Add a Book
 
-Endpoint: /create
-Method: POST
-Description: Adds a new book to the library.
-Request Body:
+CRUD Operations: Create, Read, Update, and Delete books.
+Search Functionality: Find books by title, author, or both.
+Lightweight Design: Ideal for small-scale libraries or personal projects.
+API Endpoints
+
+Add a Book (POST /create)
+
+Request Body (JSON):
+JSON
 {
     "title": "The Great Gatsby",
     "author": "F. Scott Fitzgerald",
@@ -23,64 +21,35 @@ Request Body:
     ]
 }
 Response:
-Success (201):
-{
-    "message": "Book successfully added to the library",
-    "title": "the great gatsby",
-    "author": "f. scott fitzgerald",
-    "pages": [
-        {"page_number": 1, "content": "Chapter 1 content"},
-        {"page_number": 2, "content": "Chapter 2 content"}
-    ]
-}
+Success (201): JSON containing the added book details (with lowercase title and author).
 Error (400): Missing title or author, or book already exists.
-2. Retrieve Books
+Retrieve Books (GET /book)
 
-Endpoint: /book
-Method: GET
-Description: Retrieves books based on title, author, or both.
-Query Parameters:
-title (optional): Filter by book title.
-author (optional): Filter by book author.
+Query Parameters (Optional):
+title: Filter by book title.
+author: Filter by book author.
 Examples:
-Search by title: /book?title=The Great Gatsby
-Search by author: /book?author=F. Scott Fitzgerald
-Search by both: /book?title=The Great Gatsby&author=F. Scott Fitzgerald
+/book?title=The Great Gatsby (Search by title)
+/book?author=F. Scott Fitzgerald (Search by author)
+/book?title=The Great Gatsby&author=F. Scott Fitzgerald (Search by both)
 Response:
-Success (200):
-[
-    {
-        "title": "the great gatsby",
-        "author": "f. scott fitzgerald",
-        "pages": [
-            {"page_number": 1, "content": "Chapter 1 content"},
-            {"page_number": 2, "content": "Chapter 2 content"}
-        ]
-    }
-]
+Success (200): JSON array containing matching books (lowercase title and author).
 Error (404): No books found.
-3. Delete a Book
+Delete a Book (DELETE /delete)
 
-Endpoint: /delete
-Method: DELETE
-Description: Deletes a book from the library based on title and author.
-Request Body:
+Request Body (JSON):
+JSON
 {
     "title": "The Great Gatsby",
     "author": "F. Scott Fitzgerald"
 }
 Response:
-Success (200):
-{
-    "message": "Book(s) successfully removed from the library"
-}
+Success (200): JSON with message "Book(s) successfully removed from the library".
 Error (404): Book not found.
-4. Update a Book
+Update a Book (PUT /book)
 
-Endpoint: /book
-Method: PUT
-Description: Updates the details of an existing book.
-Request Body:
+Request Body (JSON):
+JSON
 {
     "title": "The Great Gatsby",
     "author": "F. Scott Fitzgerald",
@@ -92,28 +61,23 @@ Request Body:
     ]
 }
 Response:
-Success (200):
-{
-    "message": "Book details updated successfully",
-    "title": "the greatest gatsby",
-    "author": "fitzgerald",
-    "pages": [
-        {"page_number": 1, "content": "Updated Chapter 1"},
-        {"page_number": 2, "content": "Updated Chapter 2"}
-    ]
-}
+Success (200): JSON containing the updated book details (lowercase title and author).
 Error (404): Book not found.
 Running the Application
-Install Flask: Make sure you have Python installed. Then, install Flask using pip:
+
+Install Flask:
+Bash
 pip install flask
-Run the Application: Save the code to a file (e.g., app.py) and run it:
+Save the code to a file (e.g., app.py).
+Run the application:
+Bash
 python app.py
-Access the API: The application will run on http://127.0.0.1:5000. Use tools like Postman, curl, or your browser to interact with the API.
+Access the API: http://127.0.0.1:5000 (Use tools like Postman, curl, or your browser to interact).
 Example Use Cases
+
 Add a Book:
 
-Request:
-
+Bash
 curl -X POST http://127.0.0.1:5000/create -H "Content-Type: application/json" -d '{
     "title": "The Great Gatsby",
     "author": "F. Scott Fitzgerald",
@@ -124,18 +88,16 @@ curl -X POST http://127.0.0.1:5000/create -H "Content-Type: application/json" -d
 }'
 Search for Books:
 
-Request:
-
+Bash
 curl http://127.0.0.1:5000/book?title=The%20Great%20Gatsby
 Delete a Book:
 
-Request:
-
+Bash
 curl -X DELETE http://127.0.0.1:5000/delete -H "Content-Type: application/json" -d '{
     "title": "The Great Gatsby",
     "author": "F. Scott Fitzgerald"
 }'
 Notes
-The book title and author are case-insensitive; they are stored and compared in lowercase.
-If no books match the search, you will receive a 404 error.
-You must include both title and author to delete or update a book.
+
+Book titles and authors are stored and compared in lowercase for case-insensitivity.
+A 404 error indicates
